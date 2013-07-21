@@ -46,13 +46,14 @@ OSM_OBJS =      main.o \
 		JoystickInputDevice.o \
 		FIFOSoundBuffer.o \
 		DebugEventThrower.o \
-		RomSpecificOption.o
+		RomSpecificOption.o \
+		beagleboy.o
 
 OSM_EXE         =  osmose
 
 # Compiler/Linker Flags
 # add -pg on LFLAGS and CFLAGS for gprof
-RPIOPT =  -Ofast -march=armv6zk -mcpu=arm1176jzf-s -mtune=arm1176jzf-s -mfpu=vfp -mfloat-abi=hard -ffast-math -fstrict-aliasing -fomit-frame-pointer -funsafe-math-optimizations
+RPIOPT =  -Ofast -ffast-math -fstrict-aliasing -fomit-frame-pointer -funsafe-math-optimizations
 CFLAGS =  -Wall -D__USE_UNIX98 $(RPIOPT)
 LFLAGS =  -lSDL
 AFLAGS =  -f elf

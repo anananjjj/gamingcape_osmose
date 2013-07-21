@@ -12,6 +12,7 @@
 * URL: http://bcz.emu-france.com/
 *****************************************************************************/
 #include "PadInputDevice.h"
+#include "beagleboy.h"
 
 /*--------------------------------------------------------------------*/
 /* Class constructor.                                                 */
@@ -20,6 +21,9 @@ PadInputDevice::PadInputDevice(IOMapper *iomapper, OsmoseConfiguration *o)
 {
     iom = iomapper;
     oc = o;
+
+    bb_init();
+    bb_load_cal();
 }
 
 /*---------------------------------------------------------------------*/
@@ -198,6 +202,14 @@ void PadInputDevice::handleDeviceChange(SDL_Event &e)
 /*----------------------------------------------------------------------*/
 void PadInputDevice::updateDevice()
 {
+    bb_refresh();
+    if (bb_joy_y < -200) { iom->portPAD1 &= BIT1_MASK; } else { iom->portPAD1 |= BIT1; }
+    if (bb_joy_y > 200)  { iom->portPAD1 &= BIT0_MASK; } else { iom->portPAD1 |= BIT0; }
+    if (bb_joy_x < -200) { iom->portPAD1 &= BIT2_MASK; } else { iom->portPAD1 |= BIT2; }
+    if (bb_joy_x > 200)  { iom->portPAD1 &= BIT3_MASK; } else { iom->portPAD1 |= BIT3; }
+    if (bb_a) { iom->portPAD1 &= BIT4_MASK; } else { iom->portPAD1 |= BIT4; }
+    if (bb_b) { iom->portPAD1 &= BIT5_MASK; } else { iom->portPAD1 |= BIT5; }
+    if (bb_joy_y > 200 && bb_a && bb_b) { iom->port0x0 &= BIT7_MASK; } else { iom->port0x0 |= BIT7; }
 }
 
 /*----------------------------------------------------------------------*/
