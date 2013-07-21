@@ -1,0 +1,47 @@
+osmose-0.8.1+rpi20121122
+~~~~~~~~~~~~~~~~~~~~~~~~
+This is my port of the Sega Master System/Game Gear emulator OsmOse to the
+Raspberry Pi. It is based on version 0.8.1 but has had several changes made.
+
+This should run most Master System and Game Gear games at 100% speed on the
+Raspberry Pi.
+
+For more information about OsmOse, see readme.txt.
+
+Enjoy!
+--palerider
+
+
+CHANGES:
+~~~~~~~~
+rpi20121122:
+
+   * Fixed missing standard C library includes
+
+   * Removed PrecisionTimer (which contained x86 assembly) and backported some of
+     the main emulation loop from 0.9.0b instead
+
+   * Added support for configurable joystick buttons through the -joy1, -joy2 and
+     -joystart buttons. You must still explicitely turn on joystick support with
+     -joy, too.
+
+   * Backported SN76489 fixes from 0.8.2
+
+   * Backported TextWriter speed optimizations from 0.8.5b
+
+   * Also, the command line fix for arbitrary placement of filename from 0.8.5b
+
+   * Disabled FPS counter since it is not compatible with the newer frame
+     rendering code
+
+   * Disabled version display on boot for more seamless integration with emulator
+     front-ends
+
+   * Changed sound output rate from 22050 Hz to 44100 by rendering two sound 
+     frames every frame instead of one. Running the emulator at 22050 Hz causes
+     sound desync. Probably a problem in the ALSA driver.
+
+   * Doubled sound buffer size for potential better performance
+
+   * Added Raspberry Pi-specific optimizations to Makefile
+

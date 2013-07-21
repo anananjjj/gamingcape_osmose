@@ -1,0 +1,392 @@
+Osmose-0-8-1
+------------
+-Add Save state. User can save in 5 different slot emulation state
+ and reload them later. Use keypad + - to change slot. F11 Load a state,
+ F12 save a state in current slot.
+
+Osmose-0-8-0
+------------
+-Implement support for zoomed sprites.
+	Corrected games:
+	Nba_jam.gg
+	doraemon_waku_waku_pocket_paradise-gg-jp.gg
+	VR-trooper
+	X-Men - Mojo World
+	Virtua Fighter mini
+	Earthworm jim (SMS and GG) uses 16*32 sprite :/
+	And a few other one.
+-Add option -irqhack.
+-Add support for Korean Memory mapper. Mappers are now method-pointer driven instead
+ of selected in wr8() with if/else condition.
+
+Osmose-0-7-9
+------------
+-Add row 24-31 scrolling lock.
+-Add embedded database with CRC of games that need specific options.
+ User don't need to look for good option anymore.
+-Add INTERRUPT HACK in vdp updateIRQAssertion. Some game need to run a few
+ cycles before VDP generates interrupt. This Hack break a lot of games that
+ worked before, so now it's an option.
+
+Osmose-0-7-8
+------------
+-Modify the Debugger. It's now based on event.
+-Add a lot of king of debug event (On @write, EI, DI, VDP IRQ asserted ect...)
+-Correct page 0 banking. ROM at 0x000 - 0x400 is no more swapped if page 0 is
+ changed.
+ Spacegun now works.
+-Add cpu->step() just before generating IRQ. This solve a lot of came lockup.
+ Thanks to Charles Macdonalds for the trick.
+	Chicago Syndicate
+	Zool (SMS/GG)
+	Monster Truck War
+	Sega Chess
+
+Osmose-0-7-7:
+-------------
+-Move IRQ generation into VDP update method instead of osmose core.
+
+ IRQ generation is more accurate now.
+ New game working:
+	Castelo Ra Tin Bum (Brazil) [b1].sms*
+	Castelo Ra Tin Bum (Brazil) [!].sms*
+
+
+Osmose 0-7-6:
+-------------
+-Add josytick support. (-joy option)
+-Simplification of input handling in OsmoseCore.cpp. It's faster.
+
+Osmose 0-7-5:
+-------------
+-Remove IRQ control from OsmoseCore. It's now entirely handled by vdp.
+-make port 0x2 return what was written.
+-New game working:
+
+  Primal Rage GG
+  Stargate GG
+  Pac Attack GG
+  Mortal Combat II GG
+  Griffin GG
+  Crayon Chin Chan GG
+
+Osmose 0-7-4:
+-------------
+-Modify code to avoid all GCC 4.1.1 warnings.
+-Major speedup on Bilinear video filter.
+-Remove -time_limite option.
+-Add IRQ as debugger trigger.
+-Totaly Rewrote VDP IRQ system. This correct one of the oldest bug in Osmose.
+ A lot of games are no more flickering new working game:
+  Joe Montana's Football GG
+  GP Rider
+
+New games working:
+	Spider-Man - Return of the Sinister Six (JUE).gg
+	Spider-Man - Return of the Sinister Six (JUE).sms
+    Last Action Hero (UE)[!].gg
+    Star Wars (collision detection).
+
+Osmose 0-7-3:
+-------------
+-Adapt JR cpu Opcode (0x18) to GCC 4.1.1:
+    PC += (s8)env.rd8(PC); PC++; 	work.
+    PC += (s8)env.rd8(PC++);		does not work anymore.
+
+
+Osmose 0-7-2:
+-------------
+-New SN76489.
+-New Video filter: scale2xscanline (-scale2xscanline option)
+-New Video filter: Nearest neighbour (-nn2x)
+
+Osmose 0-7-1: (Major Change with GG suport).
+-------------
+-Add GAMEGEAR support.
+
+
+Osmose 0-7-0: (Major Change New CPU).
+-------------
+-Switch to a new Z80 cpu core.
+
+
+Osmose 0-6-30 Final Version:
+----------------------------
+-Correct a nasty bug in Paddle emulation. Now woody pop and megumi's revenge
+ works smoothly, but the options -paddle -jap are REQUIRED.
+-(Windows) Screenshots, tiles rip, sound rip and .bbr file are now stored into their own subdirectory.
+-Few modification on windows frontend.
+-Few code cleanup
+
+Osmose 0-6-29:
+--------------
+-(Linux) Screenshots, tiles rip, sound rip and .bbr file arte now stored into their own subdirectory.
+ This is much cleaner than puting all things together in home directory.
+
+Osmose 0.6.28:
+--------------
+-Added support for paddle contrle device (-paddle option).
+ This device is mapped on MOUSE, and MOUSE BUTTONS, keyboard is unused
+ with this option, except general emulation keys, like escape, F1, F2 ect...
+-Added -acceleration option. This option takes a parameter ex:
+ example:   -acceleration 0.78
+
+
+Osmose 0.6.27:
+--------------
+-Added support for Battery Backed memory. It's save when leaving emulator,
+ and restore on startup, if file exists. The file is rom_name.bbr and is
+ 32768 bytes.
+-Added support for vdp_status sprite collision bit5.
+ Impossible mission seems fully playable (-pal option required).
+
+Osmose 0.6.26:
+--------------
+-Implement bilinear filtering (-bilinear option).
+
+Osmose 0.6.25:
+--------------
+-Modify OsmoseCore to handle "over cycles". When cpu core executes more
+ than 228 Cycle during a scanline, over cycles are substract to CPU_CYCLE_PER_LINE.
+ This should improve emulation timing.
+ *Impossible mission is now playable (with -pal option), bug still buggy.
+
+Osmose 0.6.24:
+--------------
+-Implement text writer, to display messages on emulator screen during
+ emulation, instead of console message. This allow to read them, in
+ fullscreen mode, and on windows platform.
+-Add Key pad + - for volume control.
+-Correct a bug in VDP that cause line traced when display disable to
+ be not cleared. (This correct smurf 2 2nd level problem).
+
+Osmose 0.6.23:
+--------------
+-Modify memory mapper to handle zip file containing more than just
+ one .sms archive. Now files in archive are browsed and skipped if
+ not with .sms extension. The first .sms or .SMS file found is used
+ as our ROM.
+-Modify fps display. If fps >= 60.0 display is "fps >= 60.0 (xxx.xx)
+ if fps < 60.0  fps is displayed like this: "fps = xx.x"
+
+Osmose 0.6.22:
+--------------
+-Modify OsmoseCore to handle NTSC or PAL/SECAM timings. (-pal option)
+   *unsigned char *v_cnt points vcount_ntsc_192 or vcount_pal_192 and
+    is used instead of only vcount_ntsc_192[]
+   *VDP constructor initialises it based on option.ntsc value.
+Games that works now:
+  Back to the Future III
+  A lot of other games had flickering problem fixed.
+-Modify screenshot, soundshot and tile rip naming convention.
+-Minor OsmoseCore code reorganisation.
+-Set CPU_CYCLES_PER_LINE to 228 instead of 227.
+
+Osmose 0.6.21:
+--------------
+-Modify sound system, to start playing sound, when sound buffer has
+ been filled once. This avoid playing silence on emulator startup.
+-Complete auto frame skip. FPS is now computed on the fly, every 16 frames
+ during emulation.
+-Add option -fps to display instant FPS in window title bar.
+-Correct error on scale2x effect that cause last line color to be incorrect.
+-Modify vdp status register to return 5 lowest unused bits set to 1.
+
+Osmose 0.6.20:
+--------------
+-Implement Maxim's volume corrections.
+-Correct bug still in SN76489, when noise register is mapped on Tone2.
+ Star Wars no more bells in presentation !
+-Modify VDP to skip line drawing but handle IRQ when frame is skipped.
+-Reduce sound buffer from 8192 to 4096. This make sound more in phase.
+
+Osmose 0.6.19:
+--------------
+-Start to implement auto frame skip.
+-Correct bug in SN76489 3rd channel that was shifted to times too quick.
+ Noise are better, but still far from perfect.
+
+Osmose 0.6.18:
+--------------
+-Correct a bug in Interrupt system, SmsEnvironment: Use OnInterruptEnable
+ callback, to check immediately after EI instruction, if there is a pending
+ IRQ. In this case, generate CPU interrupt. Before irq were checked only
+ between 228 cpu cycles.
+ Games that works now:
+ *Andre Agassin Tennis
+ *Earthworm Jim
+ *Altered beast
+ *Battle outrun
+ *Lemming prototype
+ *Double target
+ *Alex Kid (attract mode was buggy)
+
+
+Osmose 0.6.17:
+--------------
+-Define an interface for every video filters behaviors, and adapt classes
+ (NullVideoFilter / TvVideoFilter)  which honors this implementation.
+ OsmoseCore do not test for Tv Filter or Fullscreen mode, it simply
+ call virtual method "Filter(SDL_Surface *s, SDL_Surface *s)".
+ OsmoseCore code is more readable. Filter.h Filter.cpp have been removed.
+-Implement  monochrom (B&W) video filter for testing purpose.
+-Implement scale2x video filter, based on Andrea Mazzoleni algorithm.
+-Add vdpi command to debugger. It display in human readable format VDP
+ informations.
+
+Osmose 0.6.16: [Third Public Release]
+--------------
+-Fix a bug that causes palette buffer overflow.
+-Remove SDL_HWSURFACE | SDL_HWACCEL option that cause -tv -fs crash under
+ windows.
+-Remove MMX tv ASM filter.
+-Encapsulate emulation main loop into OsmoseCore. Put in constructor what
+ should be, and made a little cleanup in code.
+-Modify screenshot, tileshot and sound shot routines to save in '.osmose'
+ directory under Linux.
+-Modify soundshot code. Sound can be recorded during emulation by pressing
+ F1 (default). Pressing F1 once again will stop recording. Sounds are saved
+ in differents files.
+-New key map for data rip:
+ F1 is now sound shot toggle.
+ F2 takes screenshot.
+ F3 takes rip shot.
+
+Osmose 0.6.15:
+--------------
+-Merge Bertram modification: Now osmose looks for default .osmose/osmose.ini
+ file for standard definitions. If the file does not exist, it's created.
+ inifile option is still available to specifie another configuration file.
+-Lower sound level in SN76489.
+
+Osmose 0.6.14:
+--------------
+-Encapsulate options and emulator options into classes.
+-Added option -dp (dark palette).
+
+Osmose 0.6.13:
+--------------
+-Correct a bug in VDP, that cause Bart vs space mutant to display wrong
+ gfx. Rewrote a good part of void VDP::writeCtrlPort(unsigned char data).
+ It's faster, and more accurate.
+-void VDP::writeRegs(unsigned char r,unsigned char v) has been modified.
+ Faster.
+-Buffered data port read/write, like said in charles MacDonald's doc.
+ Write data port followed by a read, will return the written value.
+
+Osmose 0.6.12:
+--------------
+-Add possibility to save VDP Tiles into 128*224 bmp file.
+ This was done first for debugging purposes, but it can be
+ usefull for gfx rippers. During emulation press 'F1'.
+
+Osmose 0.6.11:
+--------------
+-Implement keyboard configuration.
+-Support for both .sms and .zip format.
+-Sound shots are now named rom_name.wav
+-Screenshots are now named rom_nameXX.bmp
+-If sound initialisation fails, nosound option is actived, but
+ emulation is no more aborted (Thanks Bertram for pointing this).
+-SmsDebugger and Z80Disasm are no more linked in osmose when built
+ in debugger is disable. This make the executable 20Ko shorter.
+ Note that to recompile you have to comment/uncomment one line in
+ Makefile.
+-Correct Bug in Tile/Sprite priority. Robotnik and palmer are now
+ displayed in Sonic's splash screen. This bug correct a lot of other game,
+ like star wars, sonic Chaos, Sonic Blast, Cool Spot ect...
+
+Osmose 0.6.10:
+--------------
+
+-Change in VDP.cpp method void VDP::writeRegs(unsigned char r,unsigned char v)
+ switch case 2:
+
+ map_addr = ((REG2 >> 1) & 7) << 11; /* mult by 0x800; */
+ map_addr = (REG2 & 0xE) << 10; /* mult by 0x800; */
+ These line are equivalent.
+
+-addr (pointer in vram) is no more anded with 0x1F when setting addr in CRAM.
+ It's done when writing to CRAM. After increment, it wrap above 0x3FFF. This
+ allow to write 0x2010 as CRAM address, for writing 0x10.
+
+-sram / ram is now cleared at startup, like bios should do.
+
+Osmose 0.6.9:
+-------------
+
+-Code cleanup.
+-Correct usage() method to be coherent with zip.
+-Make Memory mapper/ Precision timer less verbose.
+-Preliminary codemasters mapper, "Cosmic spacehead" now boots.
+
+Osmose 0.6.8:
+-------------
+
+-Second public release.
+
+Osmose 0.6.7:
+-------------
+
+-SN76489 add high frequency correction. This makes high frequency less
+ distorded. Solomon no kagi sounds now good. Problem still exists on very high
+  frequency e.g Phantasy star.
+
+Osmose 0.6.6:
+-------------
+
+-Rewrite MemoryMapper, now its totaly pointer based.
+-SN76489 correct bug of synchronisation between generated sound
+ and played sound.
+
+Osmose 0.6.5   18-Dec-2004:
+---------------------------
+
+-VDP: implemented tile priority.
+
+
+Osmose 0.6.4   18-Dec-2004:
+---------------------------
+
+-Added Zip support. Uncompressed roms are no more supported.
+-Speed up
+
+OsmOse 0.6.3   13-Dec-2004:
+---------------------------
+
+-Change sprite drawing priority.
+
+
+OsmOse 0.6.2   12-Dec-2004:
+---------------------------
+
+-Palette writes are anded with 0x1f instead of 0x3f
+
+-On readStatusFlag, BIT5 sprite collision forced  to 1 (again).
+
+-Correct bug in interrupt system. VDP status BIT6 is now sprite
+ overflow, instead of line interrupt. On line interrupt trigger,
+ VDP status bit7 is Zero, and on VSYNC int it's 1.
+
+-Calling Z80::interrupt() with value of 0xFF for games that use
+ cpu in IM 2 interrupt mode !
+ Games that work now:
+     -Mortal combat. (probe)
+     -Hulk
+     -Xenon 2 (Still buggy)
+
+-Now read from 0xDFFC-0xDFFF returns RAM from 0xDFFC-0xDFFF
+ instead of paging registers.
+ Games that work now:
+     -shinobi
+     -world grand prix
+     -pit pot
+     -trans bot
+     -teddy boy
+
+0.6.1 Beta testers   11-Dec-2004:
+----------------------------------
+-Palette writes are anded with 0x1f instead of 0x3f
+-On readStatusFlag, remove BIT5 sprite collision forced
+ to 1.
+
