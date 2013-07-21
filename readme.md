@@ -1,3 +1,6 @@
+Fork of [a fork](http://www.raspberrypi.org/phpBB3/viewtopic.php?f=78&t=23550) of [Osmose](http://bcz.asterope.fr/) for my [beagleboy](https://github.com/bear24rw/beagleboy) project.
+--
+```
            _______                  _______
           |       |.-----.--------.|       |.-----.-----.
           |   -   ||__ --|        ||   -   ||__ --|  -__|
@@ -7,7 +10,7 @@
           |    ___||        |  |  ||  ||  _  ||   _|  _  |   _|
           |_______||__|__|__|_____||__||___._||____|_____|__|
        Version 0.8.0 - 8th public release, written by Bruno Vedder.
-
+```
 
 Osmose means:
 -------------
